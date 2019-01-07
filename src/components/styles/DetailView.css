@@ -8,6 +8,28 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  text-transform: capitalize;
+  text-align:center;
+}
+
+.detail-view a{
+  position: relative;
+  color: rgba(255,255,255,1);
+  background-color: rgba(219,87,5,1);
+  font-weight: 700;
+  font-size: 3em;
+  padding: 4px;
+  border-radius: 8px;
+  box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  margin: 10px;
+  display: inline-block;
+  transition: all .1s ease;
+}
+
+.detail-view  a:active {
+    box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+    position: relative;
+    top: 6px;
 }
 
 .sprite-image {
@@ -36,5 +58,5 @@
 }
 
 .data-char {
-  font-size: 10px;
+  font-size: 18px;
 }

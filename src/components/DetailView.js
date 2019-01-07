@@ -1,17 +1,36 @@
 import React from 'react';
 import './styles/DetailView.css';
 
-const DetailView = ({ pokemon }) => {
-	const {id, name, sprite, type } = pokemon;
-  return (
-    <section className="detail-view">
-      <img src={sprite} className='sprite-image' alt="sprite" />
-      <div className='data-wrapper'>
-        <h1 className='data-name'> ID: {id} {name}</h1>
-        <p className="data-char">Type: {type}</p>
-      </div>
-    </section>
-  )
+const DetailView = ({ backAction, pokemon }) => {
+	const getTypes = (types) => {
+		if (types.length == 1) {
+			return types[0];
+		} else {
+			let returnValue = types[0];
+			for(var x = 1; x <types.length; x++) {
+				returnValue += " / " + types[x];
+			}
+			return returnValue;
+		}
+	}
+	const {id, name, sprite, type, attack, defense, specialAttack, specialDefense, hp, speed } = pokemon;
+	return (
+		<section className="detail-view">
+			<a onClick={backAction}> Back </a>
+		  	<img src={sprite} className='sprite-image' alt="sprite" />
+		  	<div className='data-wrapper'>
+		    	<h1 className='data-name'> Name: {name}</h1>
+		    	<p className="data-char">Type: {getTypes(type)}</p>
+		     	<p className="data-char">Stats: <br />
+		     							Attack: {attack} <br />
+		     							Special Attack : {specialAttack} <br />
+		     							Defense: {defense}<br />
+		     							Special Defense : {specialDefense} <br />
+		     							Speed : {speed} <br />
+		     							HP : {hp} <br /></p>
+		  	</div>
+		</section>
+	)
 }
 
 export default DetailView;
