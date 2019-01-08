@@ -1,26 +1,29 @@
 import React, { Component } from 'react';
 import PokeCell from './PokeCell';
-import { pokeClasses } from '../pokeClasses';
 import './styles/PokeList.css';
 import Pokemon from '../Pokemon';
 
-const PokeList = ({selectPokemon, backAction}) => {
-    const cells = pokeClasses.map(pokeClass => {
-        return (
-            <div>
-                <PokeCell 
-                    key={pokeClass.id} 
-                    pokeClass={pokeClass}
+const PokeList = ({selectPokemon, backAction, storedPokemon}) => {
+    /*
+     *  Creates a list of <PokeCell> components with the list of stored pokemon
+     */
+    const getListOfPokemon = () => {
+        let returnList = [];
+        for (var x = 0; x < storedPokemon.length; x++) {
+            if (storedPokemon[x] != null) {
+                returnList.push(<PokeCell 
+                    pokemon={storedPokemon[x]}
                     handleOnClick={selectPokemon} 
-                />
-            </div>
-        );
-    });
+                />);
+            }
+        }
+        return returnList;
+    }
     return (
         <section className="oaks-pc">
             <a onClick={backAction}> Back </a>
             <div className="poke-list">
-                {cells}
+                {getListOfPokemon()}
             </div>
         </section>
     )

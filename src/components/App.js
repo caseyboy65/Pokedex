@@ -105,6 +105,7 @@ class App extends Component {
                                                 catchPokemon={this.handleSelectPokemon} 
                                                 pokemonStorage={this.setViewToList}/> : null}
                 {this.state.showing == "list" ? <PokeList 
+                                                storedPokemon={this.storedPokemon}
                                                 selectPokemon={this.handleSelectPokemon}
                                                 backAction={this.setViewToHome} />: null}
                 {this.state.showing == "details" ? <DetailView 
