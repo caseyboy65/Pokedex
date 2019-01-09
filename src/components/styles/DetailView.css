@@ -13,8 +13,8 @@
 }
 
 .sprite-image {
-  width: 80%;
-  height: 300px;
+  width: 500px;
+  height: 500px;
   margin: 10px auto;
   background-color: #585858;
   border: 15px solid #DEDEDE;
@@ -24,7 +24,7 @@
 
 .data-wrapper {
   width: 80%;
-  height: 400px;
+  height: 300px;
   padding: 10px;
   margin: 0 auto;
   background-color: #585858;

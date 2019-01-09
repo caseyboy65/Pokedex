@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PokeList from './PokeList';
 import Home from './Home';
 import DetailView from './DetailView';
-import FirstPokemon from './FirstPokemon';
+import StarterPokemon from './StarterPokemon';
 import Pokemon from '../Pokemon';
 import './styles/App.css';
 
@@ -128,7 +128,7 @@ class App extends Component {
     render() {
         return (
             <section className={this.state.loading ? "App Loading": "App"}>
-                {this.state.showing == "firstPokemon" ? <FirstPokemon 
+                {this.state.showing == "firstPokemon" ? <StarterPokemon 
                                                         loadedPokemonCallback={this.removeLoadingIcon}
                                                         pokemonSelectedCallback={this.addPokemonByObj} 
                                                         backAction={this.setViewToHome}/> : null}

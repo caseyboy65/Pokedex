@@ -1,0 +1,36 @@
+.starter-pokemon {
+	font-size: 75px;
+	text-align: center;
+}
+.starter-pokemon p {
+	margin: 20px;
+}
+
+.starter-pokemon .pokemon-picker {
+	position: relative;
+}
+
+.starter-pokemon .pokemon-picker {
+	background-color: rgba(0,0,0,0);
+	transition: background-color 1s;
+}
+.starter-pokemon .pokemon-picker:hover {
+	background-color: rgba(0,0,0,.8);
+}
+
+.starter-pokemon .pokemon-picker:hover img{
+	opacity: .2
+}
+
+.starter-pokemon img {
+	width: 375px;
+	height: 375px;
+	opacity: 1;
+	transition: width 1s, height 1s, opacity 1s;
+}
+
+.starter-pokemon .pokemon-picker:hover img:hover {
+	width:500px;
+	height:500px;
+	opacity: 1;
+}
