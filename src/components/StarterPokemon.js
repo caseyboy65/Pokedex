@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Pokemon from '../Pokemon';
 import './styles/StarterPokemon.css';
+import Utils from '../Utils'
 
 //Import utils js
-const Utils = require('../Utils.js').Utils
+const utils = new Utils();
 
 class StarterPokemon extends Component {  
 	constructor(props) {
@@ -14,42 +15,42 @@ class StarterPokemon extends Component {
             pokemon : []
         };
 
-        //The number of randomly selected pokemon to choose from
-        this.startingPokemonToChoice = 3;
-        this.queriedPokemon = 0;
-
+        //Bind this to events
         this.addPokemonToState = this.addPokemonToState.bind(this);
+
+        //The number of randomly selected pokemon to choose from
+        //TODO: This only work with up to three. anymore will not be displayed as its hardcoded
+        this.totalNumberOfPokemon = 3;
+
+        //Select first three pokemon randomly 
+        for (var x = 0; x < this.totalNumberOfPokemon; x++) {
+        	this.addRandomPokemon(this.addPokemonToState);	
+        }
     }
 
     /*
      * Adds new pokemon to the list and pushes it to the state object 
      */
-    addPokemonToState(data) {
-    	const newPokemon = new Pokemon(data);
+    addPokemonToState(newPokemon) {
     	const pokemonList = this.state.pokemon;
     	pokemonList.push(newPokemon);
     	this.setState({pokemon : pokemonList});
 
     	//Call the loading callback when all pokemon are done loading
-    	if(this.state.pokemon.length == this.startingPokemonToChoice) {
+    	if(this.state.pokemon.length == this.totalNumberOfPokemon) {
     		this.props.loadedPokemonCallback();	
     	}
     }
+
 	/*
 	 *	Randomly select a pokemon to return
 	 */
 	addRandomPokemon (callBack) {
-		if (this.queriedPokemon == this.startingPokemonToChoice) { return; } 
-
-		Utils.queryPokemonByID(Utils.randomPokemonID(), callBack);
-		this.queriedPokemon++;
+		utils.queryPokemonByID(utils.randomPokemonID(), callBack);
 	}
-	render() {
-		//TODO: This is called each time a pokemon is added and re-renders. find a way to call this only once
-		//and clean up the pokemonQueried state as the workaround
-		this.addRandomPokemon(this.addPokemonToState);
-		this.addRandomPokemon(this.addPokemonToState);
-		this.addRandomPokemon(this.addPokemonToState);
+	
+	//TODO: Maybe find a way to dynamically create images
+	render() {	
 		return (
 			<section className="starter-pokemon"> 
 				<p>Choose your first pokemon </p>
@@ -64,9 +65,18 @@ class StarterPokemon extends Component {
 						<img src={this.state.pokemon[2].sprite} 
 							 onClick={() => this.props.pokemonSelectedCallback(this.state.pokemon[2])} /> : null}
 				</div>	
+                <audio
+                    src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/svlclmai/101-opening.mp3"
+                    type="audio/mpeg"
+                    autoPlay
+                    controls
+                />              
 			</section>
 		)
 	}
 };
 
 export default StarterPokemon;
+
+
+//https://www.prmhub.com/downloads/mp3s/01_-_Mighty_Morphin_Power_Rangers/11.Ron.Wasserman.Go,Go.Power.Rangers.TV-[RAW][8EB406D7].mp3

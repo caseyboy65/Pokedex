@@ -3,6 +3,7 @@ class Pokemon {
     this.id = data.id;
     this.name = data.name;
     this.sprite = data.sprites.front_default;
+    this.battleSprite = data.sprites.back_default;
     this.type = [];
     for (var x = 0; x < data.types.length; x++) {
     	this.type.push(data.types[x].type.name);

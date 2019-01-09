@@ -1,24 +1,25 @@
-//import Pokemon from './Pokemon';
+import Pokemon from './Pokemon';
 
 //Object to contain all util apis to export
-var Utils = {};
+class Utils {
+	/* 
+	 * Get a random Pokemon ID
+	 */
+	randomPokemonID = function() {
+		//TODO: Update this to get from a fetch request, harcoding for now
+		let numberOfPokemon = 720;
+		return Math.floor(Math.random() * numberOfPokemon) + 1; 
+	}
 
-/* 
- * Get a random Pokemon ID
- */
-Utils.randomPokemonID = function() {
-	//TODO: Update this to get from a fetch request, harcoding for now
-	let numberOfPokemon = 720;
-	return Math.floor(Math.random() * numberOfPokemon) + 1; 
-}
+	queryPokemonByID = function(id, callback) {
+		fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${id}/`)
+	      	.then(response => response.json())
+	      	.then(data => {
+	      		const pokemon = new Pokemon(data);
+	      		callback(pokemon);
+	      	})
+	      	.catch(err => console.log(err));
+	}
+};
 
-Utils.queryPokemonByID = function(id, callback) {
-	fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${id}/`)
-      	.then(response => response.json())
-      	.then(data => {
-      		callback(data);
-      	})
-      	.catch(err => console.log(err));
-}
-
-exports.Utils = Utils;
+export default Utils;

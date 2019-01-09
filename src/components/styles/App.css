@@ -43,6 +43,10 @@ a:hover {
   color: green;
 }
 
+audio {
+  display:none;
+}
+
 .App {
   position:relative;
   display: flex;

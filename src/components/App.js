@@ -3,11 +3,13 @@ import PokeList from './PokeList';
 import Home from './Home';
 import DetailView from './DetailView';
 import StarterPokemon from './StarterPokemon';
+import Battle from './Battle';
 import Pokemon from '../Pokemon';
+import Utils from '../Utils'
 import './styles/App.css';
 
 //Import utils js
-const Utils = require('../Utils.js').Utils
+const utils = new Utils();
 
 class App extends Component {   
   constructor() {
@@ -18,7 +20,8 @@ class App extends Component {
         //               loading - show loading indicator while making a fetch request
         this.state = {
             pokemon: {},
-            showing: "firstPokemon",
+            battlePokemon: {},
+            showing: "startingPokemon",
             loading: true
         };
 
@@ -32,11 +35,13 @@ class App extends Component {
         this.setViewToList = this.setViewToList.bind(this);
         this.setViewToHome = this.setViewToHome.bind(this);
         this.setViewToDetails = this.setViewToDetails.bind(this);
+        this.setViewToBattle = this.setViewToBattle.bind(this);
         this.setViewMode = this.setViewMode.bind(this);
         this.setPokemon = this.setPokemon.bind(this);
         this.getStoredPokemon = this.getStoredPokemon.bind(this);
         this.setPokemonCallback = this.setPokemonCallback.bind(this);
         this.removeLoadingIcon = this.removeLoadingIcon.bind(this);
+        this.addAndSetBattlePokemon = this.addAndSetBattlePokemon.bind(this);
   }
 
     /*
@@ -89,6 +94,16 @@ class App extends Component {
         this.setViewMode("details");
     }
 
+    /*
+    * Sets the view to Details (prevents having to hard code a string litteral in other locations)
+    */
+    setViewToBattle() {
+        //TODO: Should all setViews handle the loading and pass callback to 
+        //finish loading when switching view?
+        this.setState({loading: true})
+        this.setViewMode("battle");
+    }
+
     
     setPokemonCallback(data) {
         this.removeLoadingIcon();
@@ -112,7 +127,7 @@ class App extends Component {
         if (this.getStoredPokemon(id) != null) {
             this.setPokemon(this.getStoredPokemon(id));
         } else {
-            Utils.queryPokemonByID(id, this.setPokemonCallback);
+            utils.queryPokemonByID(id, this.setPokemonCallback);
         }
     }
 
@@ -124,16 +139,30 @@ class App extends Component {
         this.setPokemon(pokemonObj);
     }
 
+    /*
+     * Set pokemon to be your pokemon to fight with
+     */
+    setBattlePokemon(pokemonObj) {
+        this.setState({battlePokemon: pokemonObj});
+    }
+
+    /*
+     * Add pokemon to roaster and set it to your battle pokemon
+     */
+    addAndSetBattlePokemon(pokemonObj) {
+        this.addPokemonByObj(pokemonObj);
+        this.setBattlePokemon(pokemonObj);
+    }
 
     render() {
         return (
             <section className={this.state.loading ? "App Loading": "App"}>
-                {this.state.showing == "firstPokemon" ? <StarterPokemon 
+                {this.state.showing == "startingPokemon" ? <StarterPokemon 
                                                         loadedPokemonCallback={this.removeLoadingIcon}
-                                                        pokemonSelectedCallback={this.addPokemonByObj} 
+                                                        pokemonSelectedCallback={this.addAndSetBattlePokemon} 
                                                         backAction={this.setViewToHome}/> : null}
                 {this.state.showing == "home" ? <Home 
-                                                catchPokemon={this.addPokemonByID} 
+                                                catchPokemon={this.setViewToBattle} 
                                                 pokemonStorage={this.setViewToList}/> : null}
                 {this.state.showing == "list" ? <PokeList 
                                                 storedPokemon={this.storedPokemon}
@@ -142,6 +171,10 @@ class App extends Component {
                 {this.state.showing == "details" ? <DetailView 
                                                     backAction={this.setViewToHome} 
                                                     pokemon={this.state.pokemon} /> : null}
+                {this.state.showing == "battle" ? <Battle 
+                                                    victoryCallback={this.addPokemonByObj}
+                                                    loadedPokemonCallback={this.removeLoadingIcon}
+                                                    battlePokemon={this.state.battlePokemon}/> : null}
             </section>
         );
     }
