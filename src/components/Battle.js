@@ -73,12 +73,33 @@ class Battle extends Component {
     }
 
     /*
+     * Set the message for the attacking pokemon to announce who is attack and if its effective or not
+     */
+    setAttackMessage(attacker, defender) {
+        var attackerName = attacker.name.charAt(0).toUpperCase() + attacker.name.slice(1);
+        var defenderName = defender.name.charAt(0).toUpperCase() + defender.name.slice(1);
+        var isStrong = this.isPokemonStrongAgainst(attacker, defender);
+        var isWeak = this.isPokemonWeakAgainst(attacker, defender);
+
+        var message = attackerName + " is attacking " + defenderName;
+        //Add effectiveness message if applies
+        if (isStrong && !isWeak) {
+            message += " and its super effective";
+        } else if (!isStrong && isWeak) {
+            message += " and is not very effective";
+        }
+
+        this.setState({battleMessage: message});
+    }
+
+    /*
      * Does the player attack by kicking off the animation as well as calculating damage ot the enemy
      */
     playerAttack(){
     	//Set state to free menu and start attack animation
     	this.setState({playerAction: "attack", enemyAction: "defend", freezeMenu: true});
-    	
+        //Set the message
+    	this.setAttackMessage(this.state.playerPokemon, this.state.enemyPokemon);
     	//Calculate damage to enemy pokemon
     	var totalDamage = this.getDamageCalc(this.state.playerPokemon, this.state.enemyPokemon);
     	var tempEnemyPokemon = this.state.enemyPokemon;
@@ -87,8 +108,9 @@ class Battle extends Component {
     	//If enemey pokemon runs out of health player wins
     	if (tempEnemyPokemon.currentHP <= 0) {
     		tempEnemyPokemon.currentHP = 0;
-    		this.setState({battleMessage: "Victory"});
-    		setTimeout(this.victory, 1000);
+            var enemyPokemonName = this.state.enemyPokemon.name.charAt(0).toUpperCase() + this.state.enemyPokemon.name.slice(1);
+    		this.setState({battleMessage: "You caught a " + enemyPokemonName});
+    		setTimeout(this.victory, 3000);
     		return;
     	}
 
@@ -102,6 +124,8 @@ class Battle extends Component {
     enemyAttack() {
     	//Set state to free menu and start attack animation
     	this.setState({playerAction: "defend", enemyAction: "attack"});
+        //set the message
+        this.setAttackMessage(this.state.enemyPokemon, this.state.playerPokemon);
 
     	//Calculate damage to enemy pokemon
     	var totalDamage = this.getDamageCalc(this.state.enemyPokemon, this.state.playerPokemon);
@@ -122,7 +146,10 @@ class Battle extends Component {
     	setTimeout(this.resetActions, 1100);
     }
 
-    getDamageCalc(attack, defender) {
+    /*
+     * Calculate the damage the attack will do to the defender and return the damage
+     */
+    getDamageCalc(attacker, defender) {
     	//Power is calcuated from the poke-move for how strong is the move
     	//TODO: Hardcoded power attack, update this if moves are introduced
     	var power = 10;
@@ -130,11 +157,50 @@ class Battle extends Component {
     	//Fire attack water would be 1/2 effective i.e. effectivness = .5
     	//Water attack fire would be double effective i.e. effectivness = 2
     	//when two types have no bonus of others effectivness is negated i.e. effectivness = 1
-    	//TODO: Hardcoded effectiveness. Effectivenessis based on poke-types, such as fire attack water for 1/2 damage
     	var effectiveness = 1;
+        //Double the efectivness if the attacker is strong against defender
+        if (this.isPokemonStrongAgainst(attacker, defender)) {
+            effectiveness *= 2;
+        }
+
+        //Half the effectivness if the attacker is weak against the defender
+        //If strong and weak against will cancel out and make efectivness 1 again
+        if (this.isPokemonWeakAgainst(attacker, defender)) {
+            effectiveness /= 2;
+        }
 
     	//calcuate the total damage
-    	return Math.round((power * (attack.attack / defender.defense)) * effectiveness);
+    	return Math.round((power * (attacker.attack / defender.defense)) * effectiveness);
+    }
+
+    /*
+     * Checks if the the attacker pokemon is strong against the defender type
+     */
+    isPokemonStrongAgainst(attacker, defender) {
+        //Loop of the strong against types of attacker and check again the defender's type
+        for (var x = 0; x < attacker.strongAgainst.length; x++) {
+            for (var y = 0; y < defender.type.length; y++ ) {
+                if (attacker.strongAgainst[x] == defender.type[y]) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Checks if the the attacker pokemon is strong against the defender type
+     */
+    isPokemonWeakAgainst(attacker, defender) {
+        //Loop of the weak against types of attacker and check again the defender's type
+        for (var x = 0; x < attacker.weakAgainst.length; x++) {
+            for (var y = 0; y < defender.type.length; y++ ) {
+                if (attacker.weakAgainst[x] == defender.type[y]) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /*
