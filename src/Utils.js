@@ -12,11 +12,22 @@ class Utils {
 	}
 
 	queryPokemonByID = function(id, callback) {
-		fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${id}/`)
+		//TODO: This is a backup API as the original one was sometimes responding with a permission denied (this one is very slow)
+		//fetch(`http://pokeapi.salestock.net/api/v2/pokemon/${id}/`)
+		fetch(`https://pokeapi.co/api/v2/pokemon/${id}/`)
 	      	.then(response => response.json())
 	      	.then(data => {
 	      		const pokemon = new Pokemon(data);
 	      		callback(pokemon);
+	      	})
+	      	.catch(err => console.log(err));
+	}
+
+	queryTypeByURL = function(url, callback) {
+		fetch(url)
+	      	.then(response => response.json())
+	      	.then(data => {
+	      		callback(data);
 	      	})
 	      	.catch(err => console.log(err));
 	}
