@@ -6,8 +6,9 @@ class Utils {
 	 * Get a random Pokemon ID
 	 */
 	randomPokemonID = function() {
-		//TODO: Update this to get from a fetch request, harcoding for now
-		let numberOfPokemon = 720;
+		//BUG: This will likely remain hard-coded, many (if not all) pokemon after 649 seem to be
+		//missing a back_default sprite which make them not appear in the battle screen.
+		let numberOfPokemon = 649;
 		return Math.floor(Math.random() * numberOfPokemon) + 1; 
 	}
 

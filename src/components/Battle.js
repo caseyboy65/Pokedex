@@ -136,7 +136,7 @@ class Battle extends Component {
     	if (tempPlayerPokemon.currentHP <= 0) {
     		tempPlayerPokemon.currentHP = 0;
     		this.setState({battleMessage: "Defeat"});
-    		setTimeout(this.defeat, 1000);
+    		setTimeout(this.defeat, 3000);
     		return;
     	}
 
@@ -170,7 +170,11 @@ class Battle extends Component {
         }
 
     	//calcuate the total damage
-    	return Math.round((power * (attacker.attack / defender.defense)) * effectiveness);
+        if (attacker.attack > attacker.specialAttack) {
+    	   return Math.round((power * (attacker.attack / defender.defense)) * effectiveness);
+        } else {
+            return Math.round((power * (attacker.specialAttack / defender.specialDefense)) * effectiveness);
+        }
     }
 
     /*
