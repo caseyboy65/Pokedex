@@ -49,9 +49,14 @@
 	left:0;
 }
 
-.battle-pokemon .arena .player-pokemon.attack img {
+.battle-pokemon .arena .player-pokemon .attack {
 	animation-duration: 1s;
 	animation-name: player-attack;
+}
+
+.battle-pokemon .arena .player-pokemon .defend {
+	animation-duration: 1s;
+	animation-name: player-defend;
 }
 
 .battle-pokemon .arena .player-pokemon .hp {
@@ -67,14 +72,29 @@
 	100% {left: 0px; bottom: 0px; transform: rotate(0deg);}
 }
 
+@keyframes player-defend {
+	0% {left: 0px; top: 0px; transform: rotate(0deg);}
+	75% {left: 0px; top: 0px; transform: rotate(0deg);}
+	80% {left: 20px; top: 20px; transform: rotate(20deg);}
+	85% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	90% {left: 20px; top: 20px; transform: rotate(20deg);}
+	95% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+
 .battle-pokemon .arena .enemy-pokemon {
 	top:0;
 	right:0;
 }
 
-.battle-pokemon .arena .enemy-pokemon.reaction img {
+.battle-pokemon .arena .enemy-pokemon .attack {
 	animation-duration: 1s;
-	animation-name: enemy-reaction;
+	animation-name: enemy-attack;
+}
+
+.battle-pokemon .arena .enemy-pokemon .defend {
+	animation-duration: 1s;
+	animation-name: enemy-defend;
 }
 
 .battle-pokemon .arena .enemy-pokemon .hp {
@@ -82,14 +102,22 @@
 	top:0;
 }
 
-@keyframes enemy-reaction {
-	0% {right: 0px; top: 0px; transform: rotate(0deg);}
-	75% {right: 0px; top: 0px; transform: rotate(0deg);}
-	80% {right: 20px; top: 20px; transform: rotate(20deg);}
-	85% {right: -20px; top: -20px; transform: rotate(-20deg);}
-	90% {right: 20px; top: 20px; transform: rotate(20deg);}
-	95% {right: -20px; top: -20px; transform: rotate(-20deg);}
-	100% {right: 0px; top: 0px; transform: rotate(0deg);}
+@keyframes enemy-attack {
+	0% {transform: rotate(0deg);}
+	25% {left: -100px; top: 40px; transform: rotate(20deg);}
+	50% {left: -300px; top: 80px; transform: rotate(-20deg);}
+	75% {left: -600px; top: 100px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+
+@keyframes enemy-defend {
+	0% {left: 0px; top: 0px; transform: rotate(0deg);}
+	75% {left: 0px; top: 0px; transform: rotate(0deg);}
+	80% {left: 20px; top: 20px; transform: rotate(20deg);}
+	85% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	90% {left: 20px; top: 20px; transform: rotate(20deg);}
+	95% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
 }
 
 .battle-pokemon .arena .menu {

@@ -175,7 +175,8 @@ class App extends Component {
                                                     victoryCallback={this.addPokemonByObj}
                                                     loadedPokemonCallback={this.removeLoadingIcon}
                                                     battlePokemon={this.state.battlePokemon}
-                                                    victory={this.addPokemonByObj}/> : null}
+                                                    victory={this.addPokemonByObj}
+                                                    defeat={this.setViewToHome}/> : null}
             </section>
         );
     }

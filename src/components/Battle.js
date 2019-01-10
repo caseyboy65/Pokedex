@@ -11,10 +11,11 @@ class Battle extends Component {
 
         //State Object : pokemon - current pokemon of interest
         this.state = {
-            battlePokemon: this.props.battlePokemon,
+            playerPokemon: this.props.battlePokemon,
             enemyPokemon: {},
             startBattle: false,
-            playerAttack: false,
+            playerAction: "",
+            enemyAction: "",
             freezeMenu: false,
             victory: false,
             defeat: false,
@@ -26,17 +27,39 @@ class Battle extends Component {
         this.playerAttack = this.playerAttack.bind(this);
         this.enemyAttack = this.enemyAttack.bind(this);
         this.victory = this.victory.bind(this);
+        this.defeat = this.defeat.bind(this);
+        this.resetPokemon = this.resetPokemon.bind(this);
+        this.resetActions = this.resetActions.bind(this);
 
         this.getARandomPokemon();
     }
 
     victory() {
-    	var cleanUpPlayerPokemon = this.state.battlePokemon;
+    	this.resetPokemon();
+    	this.props.victory(this.state.enemyPokemon);
+    }
+
+    defeat() {
+    	this.resetPokemon();
+    	this.props.defeat();
+    }
+
+    /*
+     * Reset pokemon back to full health
+     */
+    resetPokemon() {
+    	var cleanUpPlayerPokemon = this.state.playerPokemon;
     	cleanUpPlayerPokemon.currentHP = cleanUpPlayerPokemon.totalHP;
     	var cleanUpEnemyPokemon = this.state.enemyPokemon;
     	cleanUpEnemyPokemon.currentHP = cleanUpEnemyPokemon.totalHP;
+    	this.setState({playerPokemon: cleanUpPlayerPokemon, enemyPokemon: cleanUpEnemyPokemon});
+    }
 
-    	this.props.victory(cleanUpEnemyPokemon);
+    /*
+     * Reset the actions of pokemon to start next round
+     */
+    resetActions() {
+    	this.setState({playerAction: "", enemyAction: "", freezeMenu: false})
     }
 
     /*
@@ -48,12 +71,15 @@ class Battle extends Component {
     	this.props.loadedPokemonCallback();
     }
 
+    /*
+     * Does the player attack by kicking off the animation as well as calculating damage ot the enemy
+     */
     playerAttack(){
     	//Set state to free menu and start attack animation
-    	this.setState({playerAttack: true, freezeMenu: true})
+    	this.setState({playerAction: "attack", enemyAction: "defend", freezeMenu: true});
     	
     	//Calculate damage to enemy pokemon
-    	var totalDamage = this.getDamageCalc(this.state.battlePokemon, this.state.enemyPokemon);
+    	var totalDamage = this.getDamageCalc(this.state.playerPokemon, this.state.enemyPokemon);
     	var tempEnemyPokemon = this.state.enemyPokemon;
     	tempEnemyPokemon.currentHP = tempEnemyPokemon.currentHP - totalDamage;
 
@@ -68,12 +94,31 @@ class Battle extends Component {
     	//Update the health of the enemy pokemon
     	this.setState({enemyPokemon: tempEnemyPokemon});
 
-    	setTimeout(this.enemyAttack, 1000);
+    	//Automatically kick off enemy attack automatically after a player attack is finish
+    	setTimeout(this.enemyAttack, 1100);
     }
 
     enemyAttack() {
     	//Set state to free menu and start attack animation
-    	this.setState({playerAttack: false, freezeMenu: false});
+    	this.setState({playerAction: "defend", enemyAction: "attack"});
+
+    	//Calculate damage to enemy pokemon
+    	var totalDamage = this.getDamageCalc(this.state.enemyPokemon, this.state.playerPokemon);
+    	var tempPlayerPokemon = this.state.playerPokemon;
+    	tempPlayerPokemon.currentHP = tempPlayerPokemon.currentHP - totalDamage;
+
+    	//If enemey pokemon runs out of health player wins
+    	if (tempPlayerPokemon.currentHP <= 0) {
+    		tempPlayerPokemon.currentHP = 0;
+    		this.setState({battleMessage: "Defeat"});
+    		setTimeout(this.defeat, 1000);
+    		return;
+    	}
+
+    	//Update the health of the player pokemon and reset all actions for next round
+    	this.setState({	playerPokemon: tempPlayerPokemon});
+
+    	setTimeout(this.resetActions, 1100);
     }
 
     getDamageCalc(attack, defender) {
@@ -117,19 +162,19 @@ class Battle extends Component {
 			<section className={this.state.startBattle ? "battle-pokemon loading" : "battle-pokemon"}>
 				<p>{this.state.battleMessage}</p>
 				<div className="arena">
-					<div className={this.state.playerAttack ? "player-pokemon attack" : "player-pokemon"}>
+					<div className="player-pokemon">
 						<div className="hp">
-							<div className="text"> HP: {this.state.battlePokemon.currentHP} / {this.state.battlePokemon.totalHP}</div>
-							<div className="percentage" />
+							<div className="text"> HP: {this.state.playerPokemon.currentHP} / {this.state.playerPokemon.totalHP}</div>
+							<div className="percentage" style={this.getHealthStyle(this.state.playerPokemon)}/>
 						</div>
-						<img src={this.state.battlePokemon.battleSprite} />
+						<img className={this.state.playerAction} src={this.state.playerPokemon.battleSprite} />
 					</div>
-					<div className={this.state.playerAttack ? "enemy-pokemon reaction" : "enemy-pokemon"}>
+					<div className="enemy-pokemon">
 						<div className="hp">
 							<div className="text"> HP: {this.state.enemyPokemon.currentHP} / {this.state.enemyPokemon.totalHP}</div>
 							<div className="percentage" style={this.getHealthStyle(this.state.enemyPokemon)} />
 						</div>
-						<img src={this.state.enemyPokemon.sprite} />
+						<img className={this.state.enemyAction} src={this.state.enemyPokemon.sprite} />
 					</div>
 					<div className="menu">
 						<button disabled={this.state.freezeMenu} onClick={this.playerAttack} className="attack"> Attack </button>
