@@ -13,7 +13,8 @@ class Pokemon {
     this.specialAttack = data.stats[2].base_stat;
     this.defense = data.stats[3].base_stat;
     this.attack = data.stats[4].base_stat;
-    this.hp = data.stats[5].base_stat;
+    this.totalHP = data.stats[5].base_stat;
+    this.currentHP = data.stats[5].base_stat;
     this.weight = data.weight
     this.height = data.height
   }

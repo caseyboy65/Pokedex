@@ -11,12 +11,34 @@
 }
 .battle-pokemon .arena {
 	position: relative;
-	background-color: grey;
+	background-color: rgba(200,200,200, 1);
 	width:100%;
-	height: calc(100% - 80px)
+	height: calc(100% - 80px);
 }
 
-.battle-pokemon .arena img {
+.battle-pokemon .arena .hp {
+	position: absolute;
+	font-size: 25px;
+	width: 200px;
+}
+.battle-pokemon .arena .percentage {
+	width:100%;
+	height:20px;
+	background-color:green;
+	transition: width 1s;
+}
+
+.battle-pokemon .arena .player-pokemon,
+.battle-pokemon .arena .enemy-pokemon {
+	position: absolute;
+	width:400px;
+	height:400px;
+}
+
+.battle-pokemon .arena .player-pokemon img,
+.battle-pokemon .arena .enemy-pokemon img{
+	left:0;
+	top:0;
 	position: absolute;
 	width:400px;
 	height:400px;
@@ -27,9 +49,14 @@
 	left:0;
 }
 
-.battle-pokemon .arena .player-pokemon.attack {
+.battle-pokemon .arena .player-pokemon.attack img {
 	animation-duration: 1s;
 	animation-name: player-attack;
+}
+
+.battle-pokemon .arena .player-pokemon .hp {
+	right:-200px;
+	bottom:0;
 }
 
 @keyframes player-attack {
@@ -45,9 +72,14 @@
 	right:0;
 }
 
-.battle-pokemon .arena .enemy-pokemon.reaction {
+.battle-pokemon .arena .enemy-pokemon.reaction img {
 	animation-duration: 1s;
 	animation-name: enemy-reaction;
+}
+
+.battle-pokemon .arena .enemy-pokemon .hp {
+	left:-200px;
+	top:0;
 }
 
 @keyframes enemy-reaction {

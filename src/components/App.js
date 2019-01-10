@@ -158,9 +158,9 @@ class App extends Component {
         return (
             <section className={this.state.loading ? "App Loading": "App"}>
                 {this.state.showing == "startingPokemon" ? <StarterPokemon 
-                                                        loadedPokemonCallback={this.removeLoadingIcon}
-                                                        pokemonSelectedCallback={this.addAndSetBattlePokemon} 
-                                                        backAction={this.setViewToHome}/> : null}
+                                                            loadedPokemonCallback={this.removeLoadingIcon}
+                                                            pokemonSelectedCallback={this.addAndSetBattlePokemon} 
+                                                            backAction={this.setViewToHome}/> : null}
                 {this.state.showing == "home" ? <Home 
                                                 catchPokemon={this.setViewToBattle} 
                                                 pokemonStorage={this.setViewToList}/> : null}
@@ -174,7 +174,8 @@ class App extends Component {
                 {this.state.showing == "battle" ? <Battle 
                                                     victoryCallback={this.addPokemonByObj}
                                                     loadedPokemonCallback={this.removeLoadingIcon}
-                                                    battlePokemon={this.state.battlePokemon}/> : null}
+                                                    battlePokemon={this.state.battlePokemon}
+                                                    victory={this.addPokemonByObj}/> : null}
             </section>
         );
     }

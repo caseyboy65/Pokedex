@@ -13,7 +13,7 @@ const DetailView = ({ backAction, pokemon }) => {
 			return returnValue;
 		}
 	}
-	const {id, name, sprite, type, attack, defense, specialAttack, specialDefense, hp, speed } = pokemon;
+	const {id, name, sprite, type, attack, defense, specialAttack, specialDefense, totalHP, speed } = pokemon;
 	return (
 		<section className="detail-view">
 			<a onClick={backAction}> Back </a>
@@ -27,7 +27,7 @@ const DetailView = ({ backAction, pokemon }) => {
 		     							Defense: {defense}<br />
 		     							Special Defense : {specialDefense} <br />
 		     							Speed : {speed} <br />
-		     							HP : {hp} <br /></p>
+		     							HP : {totalHP} <br /></p>
 		  	</div>
 		</section>
 	)

@@ -43,6 +43,32 @@ a:hover {
   color: green;
 }
 
+button {
+  background-color: rgba(219,87,5,1);
+  color: rgba(255,255,255,1);
+  font-weight: 700;
+  font-size: 3em;
+  border-radius: 15px;
+  margin: 20px;
+  box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
+  transition: all .1s ease;
+}
+button:active {
+  box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
+}
+button:hover {
+  color:green;
+}
+
+button[disabled] {
+  background-color: rgba(125,125,125,1);
+  box-shadow: 0px 9px 0px rgba(75,75,75,1), 0px 9px 25px rgba(0,0,0,.7);
+}
+
+button[disabled]:hover {
+  color: rgba(255,255,255,1);
+}
+
 audio {
   display:none;
 }
