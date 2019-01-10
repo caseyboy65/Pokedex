@@ -42,6 +42,7 @@ class App extends Component {
         this.setPokemonCallback = this.setPokemonCallback.bind(this);
         this.removeLoadingIcon = this.removeLoadingIcon.bind(this);
         this.addAndSetBattlePokemon = this.addAndSetBattlePokemon.bind(this);
+        this.setBattlePokemon = this.setBattlePokemon.bind(this);
   }
 
     /*
@@ -170,7 +171,8 @@ class App extends Component {
                                                 backAction={this.setViewToHome} />: null}
                 {this.state.showing == "details" ? <DetailView 
                                                     backAction={this.setViewToHome} 
-                                                    pokemon={this.state.pokemon} /> : null}
+                                                    pokemon={this.state.pokemon}
+                                                    chooseAction={this.setBattlePokemon} /> : null}
                 {this.state.showing == "battle" ? <Battle 
                                                     victoryCallback={this.addPokemonByObj}
                                                     loadedPokemonCallback={this.removeLoadingIcon}

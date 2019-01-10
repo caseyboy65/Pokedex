@@ -31,6 +31,7 @@ class Battle extends Component {
         this.resetPokemon = this.resetPokemon.bind(this);
         this.resetActions = this.resetActions.bind(this);
 
+        //Find a random pokemon to battle
         this.getARandomPokemon();
     }
 
@@ -151,7 +152,6 @@ class Battle extends Component {
     		return {width: '100%'};
     	}
     	var width = (pokemon.currentHP / pokemon.totalHP) * 100;
-    	debugger;
     	width = width.toString() + "%"
     	var typeObj = {width: width} 
     	return typeObj;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles/DetailView.css';
 
-const DetailView = ({ backAction, pokemon }) => {
+const DetailView = ({ backAction, pokemon, chooseAction }) => {
 	const getTypes = (types) => {
 		if (types.length == 1) {
 			return types[0];
@@ -16,7 +16,8 @@ const DetailView = ({ backAction, pokemon }) => {
 	const {id, name, sprite, type, attack, defense, specialAttack, specialDefense, totalHP, speed } = pokemon;
 	return (
 		<section className="detail-view">
-			<a onClick={backAction}> Back </a>
+			<button onClick={backAction}> Back </button	>
+			<button onClick={() => chooseAction(pokemon)}> Choose </button	>
 		  	<img src={sprite} className='sprite-image' alt="sprite" />
 		  	<div className='data-wrapper'>
 		    	<h1 className='data-name'> Name: {name}</h1>
