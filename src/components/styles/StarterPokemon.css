@@ -35,3 +35,37 @@
 	height:500px;
 	opacity: 1;
 }
+
+/* adjust for smaller screen sizes */
+@media only screen and (max-width : 1300px) {
+	.starter-pokemon p {
+		font-size: 50px;
+	}
+
+	.starter-pokemon .pokemon-picker img {
+		width: 225px;
+		height: 225px;
+	}
+
+	.starter-pokemon .pokemon-picker:hover img:hover {
+		width:350px;
+		height:350px;
+	}
+}
+
+/* adjust for smaller screen sizes */
+@media only screen and (max-width : 1000px) {
+	.starter-pokemon p {
+		font-size: 40px;
+	}
+
+	.starter-pokemon .pokemon-picker img {
+		width: 150px;
+		height: 150px;
+	}
+
+	.starter-pokemon .pokemon-picker:hover img:hover {
+		width:250px;
+		height:250px;
+	}
+}

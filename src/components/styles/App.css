@@ -1,15 +1,11 @@
 * {
   box-sizing: border-box;
 }
-
-
 body {
   margin: 0;
   padding: 0;
   font-family: 'Avenir Next', sans-serif;
 }
-
-
 h1,
 h2,
 h3,
@@ -27,7 +23,6 @@ a {
     font-weight: 900; 
     color: blue;
 }
-
 a:hover {
     color: #ffc266;
 }
@@ -36,9 +31,10 @@ button {
   background-color: rgba(219,87,5,1);
   color: rgba(255,255,255,1);
   font-weight: 700;
-  font-size: 3em;
+  font-size: 2em;
+  height: 2em;
   border-radius: 15px;
-  margin: 20px;
+  margin: 10px;
   border-width:0px;
   box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
   transition: all .1s ease;

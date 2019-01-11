@@ -6,7 +6,7 @@
 }
 
 .battle-pokemon p {
-	height:80px;
+	margin-bottom: 20px;
 	font-size:40px;
 }
 .battle-pokemon .arena {
@@ -64,24 +64,6 @@
 	bottom:0;
 }
 
-@keyframes player-attack {
-	0% {transform: rotate(0deg);}
-	25% {left: 100px; bottom: 40px; transform: rotate(20deg);}
-	50% {left: 300px; bottom: 80px; transform: rotate(-20deg);}
-	75% {left: 600px; bottom: 100px; transform: rotate(20deg);}
-	100% {left: 0px; bottom: 0px; transform: rotate(0deg);}
-}
-
-@keyframes player-defend {
-	0% {left: 0px; top: 0px; transform: rotate(0deg);}
-	75% {left: 0px; top: 0px; transform: rotate(0deg);}
-	80% {left: 20px; top: 20px; transform: rotate(20deg);}
-	85% {left: -20px; top: -20px; transform: rotate(-20deg);}
-	90% {left: 20px; top: 20px; transform: rotate(20deg);}
-	95% {left: -20px; top: -20px; transform: rotate(-20deg);}
-	100% {left: 0px; top: 0px; transform: rotate(0deg);}
-}
-
 .battle-pokemon .arena .enemy-pokemon {
 	top:0;
 	right:0;
@@ -102,11 +84,124 @@
 	top:0;
 }
 
+.battle-pokemon .arena .menu {
+	position: absolute;
+	bottom:0;
+	right:0;
+}
+
+/* adjust for smaller screen sizes */
+@media only screen and (max-width : 1300px) {
+	.battle-pokemon p {
+		font-size:30px;
+	}
+
+	.battle-pokemon .arena .player-pokemon,
+	.battle-pokemon .arena .enemy-pokemon {
+		width:300px;
+		height:300px;
+	}
+
+	.battle-pokemon .arena .player-pokemon img,
+	.battle-pokemon .arena .enemy-pokemon img{
+		width:300px;
+		height:300px;
+	}
+
+	.battle-pokemon .arena .player-pokemon .attack {
+		animation-name: player-attack-1300;
+	}
+
+	.battle-pokemon .arena .player-pokemon .hp {
+		right:-150px;
+	}
+
+	.battle-pokemon .arena .enemy-pokemon .attack {
+		animation-name: enemy-attack-1300;
+	}
+
+	.battle-pokemon .arena .enemy-pokemon .hp {
+		left:-150px;
+	}
+}
+
+/* adjust for smaller screen sizes */
+@media only screen and (max-width : 1000px) {
+	.battle-pokemon p {
+		font-size:20px;
+	}
+
+	.battle-pokemon .arena .player-pokemon,
+	.battle-pokemon .arena .enemy-pokemon {
+		width:200px;
+		height:200px;
+	}
+
+	.battle-pokemon .arena .player-pokemon img,
+	.battle-pokemon .arena .enemy-pokemon img{
+		width:200px;
+		height:200px;
+	}
+
+	.battle-pokemon .arena .player-pokemon .attack {
+		animation-name: player-attack-1000;
+	}
+	.battle-pokemon .arena .enemy-pokemon .attack {
+		animation-name: enemy-attack-1000;
+	}
+}
+
+@keyframes player-attack {
+	0% {transform: rotate(0deg);}
+	25% {left: 100px; top: -40px; transform: rotate(20deg);}
+	50% {left: 300px; top: -80px; transform: rotate(-20deg);}
+	75% {left: 600px; top: -100px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+@keyframes player-attack-1300 {
+	0% {transform: rotate(0deg);}
+	25% {left: 100px; top: -60px; transform: rotate(20deg);}
+	50% {left: 200px; top: -100px; transform: rotate(-20deg);}
+	75% {left: 400px; top: -180px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+@keyframes player-attack-1000 {
+	0% {transform: rotate(0deg);}
+	25% {left: 100px; top: -90px; transform: rotate(20deg);}
+	50% {left: 200px; top: -170px; transform: rotate(-20deg);}
+	75% {left: 400px; top: -300px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+
+@keyframes player-defend {
+	0% {left: 0px; top: 0px; transform: rotate(0deg);}
+	75% {left: 0px; top: 0px; transform: rotate(0deg);}
+	80% {left: 20px; top: 20px; transform: rotate(20deg);}
+	85% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	90% {left: 20px; top: 20px; transform: rotate(20deg);}
+	95% {left: -20px; top: -20px; transform: rotate(-20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+
 @keyframes enemy-attack {
 	0% {transform: rotate(0deg);}
 	25% {left: -100px; top: 40px; transform: rotate(20deg);}
 	50% {left: -300px; top: 80px; transform: rotate(-20deg);}
 	75% {left: -600px; top: 100px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+@keyframes enemy-attack-1300 {
+	0% {transform: rotate(0deg);}
+	25% {left: -100px; top: 60px; transform: rotate(20deg);}
+	50% {left: -200px; top: 100px; transform: rotate(-20deg);}
+	75% {left: -400px; top: 180px; transform: rotate(20deg);}
+	100% {left: 0px; top: 0px; transform: rotate(0deg);}
+}
+@keyframes enemy-attack-1000 {
+	0% {transform: rotate(0deg);}
+	25% {left: -100px; top: 90px; transform: rotate(20deg);}
+	50% {left: -200px; top: 170px; transform: rotate(-20deg);}
+	75% {left: -400px; top: 300px; transform: rotate(20deg);}
 	100% {left: 0px; top: 0px; transform: rotate(0deg);}
 }
 
@@ -120,8 +215,3 @@
 	100% {left: 0px; top: 0px; transform: rotate(0deg);}
 }
 
-.battle-pokemon .arena .menu {
-	position: absolute;
-	bottom:0;
-	right:0;
-}
