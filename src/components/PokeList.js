@@ -71,7 +71,7 @@ const StorageView = ({ backAction, storedPokemon, viewPokemon, battlePokemon }) 
 
     return (
         <section className="oaks-pc">
-            <a onClick={backAction}> Back </a>
+            <button onClick={backAction}> Back </button>
             <div className="poke-list">
                 {getListOfPokemon()}
             </div>

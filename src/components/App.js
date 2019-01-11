@@ -21,7 +21,8 @@ class App extends Component {
             pokemon: {},
             battlePokemon: {},
             showing: "startingPokemon",
-            loading: true
+            loading: true,
+            isMusicOn: false
         };
 
         //Local cache of known pokemon selected as to increase user speed by not having to make another fetch
@@ -41,6 +42,7 @@ class App extends Component {
         this.removeLoadingIcon = this.removeLoadingIcon.bind(this);
         this.addAndSetBattlePokemon = this.addAndSetBattlePokemon.bind(this);
         this.setBattlePokemon = this.setBattlePokemon.bind(this);
+        this.toggleMusic = this.toggleMusic.bind(this);
   }
 
     /*
@@ -148,13 +150,22 @@ class App extends Component {
         this.setBattlePokemon(pokemonObj);
     }
 
+    /*
+     * Toggle music on and off for the app
+     */
+    toggleMusic() {
+        this.setState({isMusicOn: !this.state.isMusicOn});
+    }
+
     render() {
         return (
             <section className={this.state.loading ? "App Loading": "App"}>
+                <a onClick={this.toggleMusic} className={this.state.isMusicOn ? "play-music on" : "play-music"}> Play Music </a>
                 {this.state.showing == "startingPokemon" ? <StarterPokemon 
                                                             loadedPokemonCallback={this.removeLoadingIcon}
                                                             pokemonSelectedCallback={this.addAndSetBattlePokemon} 
-                                                            backAction={this.setViewToHome}/> : null}
+                                                            backAction={this.setViewToHome}
+                                                            isMusicOn={this.state.isMusicOn}/> : null}
                 {this.state.showing == "home" ? <Home 
                                                 catchPokemon={this.setViewToBattle} 
                                                 pokemonStorage={this.setViewToList}/> : null}
@@ -168,7 +179,8 @@ class App extends Component {
                                                     loadedPokemonCallback={this.removeLoadingIcon}
                                                     battlePokemon={this.state.battlePokemon}
                                                     victory={this.addPokemonByObj}
-                                                    defeat={this.setViewToHome}/> : null}
+                                                    defeat={this.setViewToHome}
+                                                    isMusicOn={this.state.isMusicOn}/> : null}
             </section>
         );
     }

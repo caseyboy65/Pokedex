@@ -73,12 +73,13 @@ class StarterPokemon extends Component {
                         backAction={() => this.setState({viewPokemonDetails: false})} 
                         pokemon={this.state.currentSelectedPokemon}
                         chooseAction={() => this.props.pokemonSelectedCallback(this.state.currentSelectedPokemon)} /> : null}
-                <audio
-                    src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/svlclmai/101-opening.mp3"
-                    type="audio/mpeg"
-                    autoPlay
-                    controls
-                />              
+                {this.props.isMusicOn ?
+                    <audio
+                        src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/svlclmai/101-opening.mp3"
+                        type="audio/mpeg"
+                        autoPlay
+                        controls/> : null}
+
 			</section>
 		)
 	}

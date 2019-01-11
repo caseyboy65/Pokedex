@@ -13,8 +13,6 @@
 .poke-list {
   display: block;
   flex-wrap: wrap;
-  /*justify-content: space-around;
-  align-items: center;*/
   width: 80%;
   height: 80%;
   padding: 10px;

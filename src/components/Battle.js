@@ -253,11 +253,12 @@ class Battle extends Component {
 						<button disabled={this.state.freezeMenu} onClick={this.playerAttack} className="attack"> Attack </button>
 					</div>
 				</div>
-				<audio
-					src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/ravcdrgo/107-battle%20%28vs%20wild%20pokemon%29.mp3"
-					type="audio/mpeg"
-					autoPlay
-					controls />
+				{this.props.isMusicOn ?
+                    <audio
+    					src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/ravcdrgo/107-battle%20%28vs%20wild%20pokemon%29.mp3"
+    					type="audio/mpeg"
+    					autoPlay
+    					controls /> : null}
 			</section>
 		)
 	}

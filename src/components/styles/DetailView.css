@@ -12,6 +12,11 @@
   text-align:center;
 }
 
+.detail-view button{
+  margin: 10px;
+  height: 80px;
+}
+
 .sprite-image {
   width: 500px;
   height: 500px;

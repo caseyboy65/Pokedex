@@ -18,29 +18,18 @@ p {
   margin: 0;
 }
 
-a {
-  position: relative;
-  color: rgba(255,255,255,1);
-  background-color: rgba(219,87,5,1);
-  font-weight: 700;
-  font-size: 3em;
-  padding: 4px;
-  border-radius: 8px;
-  box-shadow: 0px 9px 0px rgba(219,31,5,1), 0px 9px 25px rgba(0,0,0,.7);
-  margin: 20px;
-  display: inline-block;
-  transition: all .1s ease;
-  z-index: 1;
+/*Generic css*/
+input:hover {
+  background-color: #ffc266;
 }
-
-a:active {
-    box-shadow: 0px 3px 0px rgba(219,31,5,1), 0px 3px 6px rgba(0,0,0,.9);
-    position: relative;
-    top: 6px;
+a {
+    font-family: "Font Awesome 5 Free"; 
+    font-weight: 900; 
+    color: blue;
 }
 
 a:hover {
-  color: green;
+    color: #ffc266;
 }
 
 button {
@@ -122,4 +111,25 @@ audio {
 @keyframes rotate {
   0%  {transform: rotateZ(0deg); }
   100%  {transform: rotateZ(180deg);}
+}
+
+.play-music {
+    z-index: 2;
+    position: absolute;
+    font-size: 20px;
+    left: 0;
+    top: 0;
+    margin: 10px;
+}
+
+.play-music.on {
+    color:green;
+}
+
+
+/*
+ * ICONS
+ */
+.play-music:before {
+    content:"\f35a";
 }
