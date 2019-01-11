@@ -68,7 +68,7 @@ class Battle extends Component {
      */
     setEnemyPokemon(pokemon) {
     	this.setState({ enemyPokemon: pokemon,
-    					battleMessage: "A wild " + (pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)) + " appears!"});
+    					battleMessage: "A wild " + (pokemon.name) + " appears!"});
     	this.props.loadedPokemonCallback();
     }
 
@@ -76,8 +76,8 @@ class Battle extends Component {
      * Set the message for the attacking pokemon to announce who is attack and if its effective or not
      */
     setAttackMessage(attacker, defender) {
-        var attackerName = attacker.name.charAt(0).toUpperCase() + attacker.name.slice(1);
-        var defenderName = defender.name.charAt(0).toUpperCase() + defender.name.slice(1);
+        var attackerName = attacker.name;
+        var defenderName = defender.name;
         var isStrong = this.isPokemonStrongAgainst(attacker, defender);
         var isWeak = this.isPokemonWeakAgainst(attacker, defender);
 
@@ -93,7 +93,7 @@ class Battle extends Component {
     }
 
     /*
-     * Does the player attack by kicking off the animation as well as calculating damage ot the enemy
+     * Does the player attack by kicking off the animation as well as calculating damage to the enemy
      */
     playerAttack(){
     	//Set state to free menu and start attack animation
@@ -108,7 +108,7 @@ class Battle extends Component {
     	//If enemey pokemon runs out of health player wins
     	if (tempEnemyPokemon.currentHP <= 0) {
     		tempEnemyPokemon.currentHP = 0;
-            var enemyPokemonName = this.state.enemyPokemon.name.charAt(0).toUpperCase() + this.state.enemyPokemon.name.slice(1);
+            var enemyPokemonName = this.state.enemyPokemon.name;
     		this.setState({battleMessage: "You caught a " + enemyPokemonName});
     		setTimeout(this.victory, 3000);
     		return;
@@ -121,6 +121,9 @@ class Battle extends Component {
     	setTimeout(this.enemyAttack, 1100);
     }
 
+    /*
+     * Does the enemy attack by kicking off the animation as well as calculating damage to the player
+     */
     enemyAttack() {
     	//Set state to free menu and start attack animation
     	this.setState({playerAction: "defend", enemyAction: "attack"});

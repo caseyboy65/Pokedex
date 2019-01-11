@@ -1,8 +1,9 @@
 .starter-pokemon {
-	font-size: 75px;
 	text-align: center;
+	position: relative;
 }
 .starter-pokemon p {
+	font-size: 75px;
 	margin: 20px;
 }
 
@@ -22,7 +23,7 @@
 	opacity: .2
 }
 
-.starter-pokemon img {
+.starter-pokemon .pokemon-picker img {
 	width: 375px;
 	height: 375px;
 	opacity: 1;

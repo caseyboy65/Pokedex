@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Pokemon from '../Pokemon';
+import DetailView from './DetailView';
 import './styles/StarterPokemon.css';
 import Utils from '../Utils'
 
@@ -12,20 +13,30 @@ class StarterPokemon extends Component {
 
         //State Object : pokemon - current pokemon of interest
         this.state = {
-            pokemon : []
+            pokemon : [],
+            viewPokemonDetails : false,
+            currentSelectedPokemon: {}
         };
 
         //Bind this to events
         this.addPokemonToState = this.addPokemonToState.bind(this);
+        this.selectAndViewPokemon = this.selectAndViewPokemon.bind(this);
 
         //The number of randomly selected pokemon to choose from
-        //TODO: This only work with up to three. anymore will not be displayed as its hardcoded
+        //TODO: This only work with up to three in terms of css, may need to find a why to make it more dynamic
         this.totalNumberOfPokemon = 3;
 
         //Select first three pokemon randomly 
         for (var x = 0; x < this.totalNumberOfPokemon; x++) {
         	this.addRandomPokemon(this.addPokemonToState);	
         }
+    }
+
+    /*
+     * Set the current pokemon to view
+     */
+    selectAndViewPokemon(pokemon) {
+        this.setState({viewPokemonDetails: true, currentSelectedPokemon: pokemon});
     }
 
     /*
@@ -52,19 +63,16 @@ class StarterPokemon extends Component {
 	//TODO: Maybe find a way to dynamically create images
 	render() {	
 		return (
-			<section className="starter-pokemon"> 
-				<p>Choose your first pokemon </p>
-				<div className="pokemon-picker">
-					{this.state.pokemon[0] ? 
-						<img src={this.state.pokemon[0].sprite} 
-							 onClick={() => this.props.pokemonSelectedCallback(this.state.pokemon[0])} /> : null}
-					{this.state.pokemon[1] ? 
-						<img src={this.state.pokemon[1].sprite} 
-							 onClick={() => this.props.pokemonSelectedCallback(this.state.pokemon[1])} /> : null}
-					{this.state.pokemon[2] ? 
-						<img src={this.state.pokemon[2].sprite} 
-							 onClick={() => this.props.pokemonSelectedCallback(this.state.pokemon[2])} /> : null}
-				</div>	
+			<section className="View"> 
+                {this.state.viewPokemonDetails == false? 
+                    <PokePicker 
+                        pokemonList={this.state.pokemon}
+                        handleOnClick={this.selectAndViewPokemon}/> : null}
+                {this.state.viewPokemonDetails == true ? 
+                    <DetailView 
+                        backAction={() => this.setState({viewPokemonDetails: false})} 
+                        pokemon={this.state.currentSelectedPokemon}
+                        chooseAction={() => this.props.pokemonSelectedCallback(this.state.currentSelectedPokemon)} /> : null}
                 <audio
                     src="http://66.90.93.122/ost/pokemon-gameboy-sound-collection/svlclmai/101-opening.mp3"
                     type="audio/mpeg"
@@ -76,7 +84,37 @@ class StarterPokemon extends Component {
 	}
 };
 
+const PokePicker = ({ pokemonList, handleOnClick }) => {
+    /*
+     * Loop over list of pokemon and create an img component for each
+     */
+    const getListOfPokemon = () => {
+        let returnList = [];
+        for (var x = 0; x < pokemonList.length; x++) {
+            if (pokemonList[x] != null) {
+                returnList.push(<PokeImage 
+                                    pokemon={pokemonList[x]}
+                                    handleOnClick={handleOnClick} />);
+            }
+        }
+        return returnList;
+    }
+    return (
+        <section className="starter-pokemon">
+            <p>Choose your first pokemon </p>
+            <div className="pokemon-picker">
+                {getListOfPokemon()}     
+            </div>
+        </section>
+    )
+};
+
+const PokeImage = ({pokemon, handleOnClick}) => {
+    return  <img 
+                src={pokemon.sprite} 
+                onClick={() => handleOnClick(pokemon)} />
+}
+
 export default StarterPokemon;
 
 
-//https://www.prmhub.com/downloads/mp3s/01_-_Mighty_Morphin_Power_Rangers/11.Ron.Wasserman.Go,Go.Power.Rangers.TV-[RAW][8EB406D7].mp3

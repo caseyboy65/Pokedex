@@ -7,7 +7,7 @@ class Pokemon {
         this.setTypes = this.setTypes.bind(this);
 
         this.id = data.id;
-        this.name = data.name;
+        this.name = data.name.charAt(0).toUpperCase() + data.name.slice(1);
         this.sprite = data.sprites.front_default;
         this.battleSprite = data.sprites.back_default;
         this.type = [];

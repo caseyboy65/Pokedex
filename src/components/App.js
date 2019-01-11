@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PokeList from './PokeList';
 import Home from './Home';
-import DetailView from './DetailView';
 import StarterPokemon from './StarterPokemon';
 import Battle from './Battle';
 import Pokemon from '../Pokemon';
@@ -34,7 +33,6 @@ class App extends Component {
         this.addPokemonByObj = this.addPokemonByObj.bind(this);
         this.setViewToList = this.setViewToList.bind(this);
         this.setViewToHome = this.setViewToHome.bind(this);
-        this.setViewToDetails = this.setViewToDetails.bind(this);
         this.setViewToBattle = this.setViewToBattle.bind(this);
         this.setViewMode = this.setViewMode.bind(this);
         this.setPokemon = this.setPokemon.bind(this);
@@ -61,7 +59,7 @@ class App extends Component {
     */
     setPokemon(pokemon) {
         this.setState({ pokemon: pokemon, loading: false });
-        this.setViewToDetails();
+        this.setViewToHome();
         this.storedPokemon[pokemon.id] = pokemon;
     }
 
@@ -75,28 +73,21 @@ class App extends Component {
     }
 
     /*
-    * Sets the view to List (prevents having to hard code a string litteral in other locations)
+    * Sets the view to List
     */
     setViewToHome() {
         this.setViewMode("home");
     }
 
     /*
-    * Sets the view to List (prevents having to hard code a string litteral in other locations)
+    * Sets the view to List
     */
     setViewToList() {
         this.setViewMode("list");
     }
 
     /*
-    * Sets the view to Details (prevents having to hard code a string litteral in other locations)
-    */
-    setViewToDetails() {
-        this.setViewMode("details");
-    }
-
-    /*
-    * Sets the view to Details (prevents having to hard code a string litteral in other locations)
+    * Sets the view to Battle screen
     */
     setViewToBattle() {
         //TODO: Should all setViews handle the loading and pass callback to 
@@ -120,8 +111,10 @@ class App extends Component {
     }
 
     /*
-    * Handles the selecting pokemon action which will set the pokemon state as well as switch to the detail view of that pokemon
+    * Handles adding of pokemon to the players list. will query web service if it does not already exist in memory
     */
+    //TODO: Remove switching view context here, addPokemon should only add pokemon and not do unexpected behavior
+    //TODO: This might be worth movig to its own class object similar to the Pokemon object, something like an inventory manager
     addPokemonByID(id) {
         this.setState({loading: true})
         //IF local cache exist use that and set pokemon state ELSE fetch data and set pokemon state
@@ -167,12 +160,9 @@ class App extends Component {
                                                 pokemonStorage={this.setViewToList}/> : null}
                 {this.state.showing == "list" ? <PokeList 
                                                 storedPokemon={this.storedPokemon}
-                                                selectPokemon={this.addPokemonByID}
-                                                backAction={this.setViewToHome} />: null}
-                {this.state.showing == "details" ? <DetailView 
-                                                    backAction={this.setViewToHome} 
-                                                    pokemon={this.state.pokemon}
-                                                    chooseAction={this.setBattlePokemon} /> : null}
+                                                selectPokemon={this.setBattlePokemon}
+                                                backAction={this.setViewToHome} 
+                                                battlePokemon={this.state.battlePokemon}/>: null}
                 {this.state.showing == "battle" ? <Battle 
                                                     victoryCallback={this.addPokemonByObj}
                                                     loadedPokemonCallback={this.removeLoadingIcon}

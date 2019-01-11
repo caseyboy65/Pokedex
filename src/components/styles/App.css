@@ -74,11 +74,14 @@ audio {
   display:none;
 }
 
-.App {
+.App,
+.View {
   position:relative;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.App {
   width: 80%;
   height: 800px;
   padding-left: 10px;
@@ -86,6 +89,10 @@ audio {
   background-color: #FE0065;
   border-radius: 10px;
   box-shadow: 0 14px 45px rgba(0, 0, 0, 0.22), 0 18px 45px rgba(0, 0, 0, 0.22);
+}
+.View {
+  width: 100%;
+  height: 100%;
 }
 
 .App.Loading::before {
